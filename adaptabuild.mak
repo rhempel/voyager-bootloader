@@ -32,7 +32,9 @@ SRC_TEST :=
 
 SRC_C += src/voyager.c
 
+SRC_TEST += test/test_api.cpp
 SRC_TEST += test/test_bootloader.cpp
+SRC_TEST += test/test_defaults.cpp
 SRC_TEST += test/test_dfu.cpp
 SRC_TEST += test/dummy_test.cpp
 SRC_TEST += test/main.cpp
@@ -55,6 +57,11 @@ ifneq (host,$(MCU))
   $(MODULE)_INCPATH += $(umm_libc_PATH)/include
 endif
 
+ifeq (unittest,$(MAKECMDGOALS))
+  $(MODULE)_INCPATH += $(MODULE_PATH)/test/mocks
+  $(MODULE)_INCPATH += $(MODULE_PATH)/utils/host
+endif
+
 # ----------------------------------------------------------------------------
 # NOTE: The default config file must be created somehow - it is normally
 #       up to the developer to specify which defines are needed and how they
@@ -64,12 +71,6 @@ endif
 # that's an easy pace to leave things like HAL config, linker scripts etc
 
 $(MODULE)_INCPATH += product/$(PRODUCT)/config/$(MCU)
-
-# ----------------------------------------------------------------------------
-ifeq (unittest,$(MAKECMDGOALS))
-  $(MODULE)_INCPATH += $(MODULE_PATH)/test/mocks
-  $(MODULE)_INCPATH += $(MODULE_PATH)/utils/host
-endif
 
 # ----------------------------------------------------------------------------
 # Set any module level compile time defaults here
@@ -100,8 +101,8 @@ include $(ADAPTABUILD_PATH)/make/library.mak
 # if the target is unittest
 
 ifeq (unittest,$(MAKECMDGOALS))
-  TESTABLE_MODULES += $(MODULE)
-  $(MODULE)_test_main = $(MODULE)/test/main.o
+  TESTABLE_MODULES += $(MODULE)_UNITTEST
+  $(MODULE)_test_main = test/main.o
   include $(ADAPTABUILD_PATH)/make/test/cpputest.mak
 endif
 
