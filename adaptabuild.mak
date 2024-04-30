@@ -53,10 +53,6 @@ $(MODULE)_SRCPATH += $(MODULE_PATH)/test/mocks
 $(MODULE)_INCPATH :=
 $(MODULE)_INCPATH += $(MODULE_PATH)/inc
 
-ifneq (host,$(MCU))
-  $(MODULE)_INCPATH += $(umm_libc_PATH)/include
-endif
-
 ifeq (unittest,$(MAKECMDGOALS))
   $(MODULE)_INCPATH += $(MODULE_PATH)/test/mocks
   $(MODULE)_INCPATH += $(MODULE_PATH)/utils/host
@@ -79,16 +75,10 @@ $(MODULE)_CDEFS :=
 $(MODULE)_CDEFS +=
 
 $(MODULE)_CFLAGS :=
-$(MODULE)_CFLAGS += -Wno-builtin-declaration-mismatch
+$(MODULE)_CFLAGS +=
 
 ifeq (unittest,$(MAKECMDGOALS))
   $(MODULE)_CDEFS += VOYAGER_UNIT_TEST
-endif
-
-ifeq (host,$(MCU))
-    # Do nothing - we want the standard library for host builds
-else
-    $(MODULE)_CFLAGS += -nostdinc
 endif
 
 # ----------------------------------------------------------------------------
