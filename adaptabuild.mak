@@ -43,12 +43,7 @@ SRC_TEST += test/mocks/mock_dfu.c
 SRC_TEST += test/mocks/mock_nvm.c
 
 # ----------------------------------------------------------------------------
-# Set up the module level source and include paths
-
-$(MODULE)_SRCPATH :=
-$(MODULE)_SRCPATH += $(MODULE_PATH)/src
-$(MODULE)_SRCPATH += $(MODULE_PATH)/test
-$(MODULE)_SRCPATH += $(MODULE_PATH)/test/mocks
+# Set up the module level include path
 
 $(MODULE)_INCPATH :=
 $(MODULE)_INCPATH += $(MODULE_PATH)/inc
