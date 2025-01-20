@@ -10,10 +10,10 @@
 MODULE := voyager-bootloader
 
 MODULE_PATH := $(call make_current_module_path)
-# $(info MODULE_PATH is $(MODULE_PATH))
+$(call log_debug,MODULE_PATH is $(MODULE_PATH))
 
 $(MODULE)_PATH := $(MODULE_PATH)
-# $(info $(MODULE)_PATH is $($(MODULE)_PATH))
+$(call log_debug,$(MODULE)_PATH is $($(MODULE)_PATH))
 
 # ----------------------------------------------------------------------------
 # Source file lists go here, C dependencies are automatically generated
@@ -29,6 +29,8 @@ $(MODULE)_PATH := $(MODULE_PATH)
 SRC_C :=
 SRC_ASM :=
 SRC_TEST :=
+
+# Here is where we begin to add files to list of sources
 
 SRC_C += src/voyager.c
 
@@ -87,7 +89,7 @@ include $(ADAPTABUILD_PATH)/make/library.mak
 
 ifeq (unittest,$(MAKECMDGOALS))
   TESTABLE_MODULES += $(MODULE)_UNITTEST
-  $(MODULE)_test_main = test/main.o
+  $(MODULE)_test_main := test/main.o
   include $(ADAPTABUILD_PATH)/make/test/cpputest.mak
 endif
 
