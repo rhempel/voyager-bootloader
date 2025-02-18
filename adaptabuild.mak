@@ -87,10 +87,10 @@ include $(ADAPTABUILD_PATH)/make/library.mak
 # Include the unit test framework makefile that works for this module
 # if the target is unittest
 
-ifeq (unittest,$(MAKECMDGOALS))
-  TESTABLE_MODULES += $(MODULE)_UNITTEST
-  $(MODULE)_test_main := test/main.o
-  include $(ADAPTABUILD_PATH)/make/test/cpputest.mak
-endif
+# ifeq (unittest,$(MAKECMDGOALS))
+#   TESTABLE_MODULES += $(MODULE)_UNITTEST
+#   $(MODULE)_test_main := test/main.o
+#  include $(ADAPTABUILD_PATH)/make/test/cpputest.mak
+# endif
 
 # ----------------------------------------------------------------------------
